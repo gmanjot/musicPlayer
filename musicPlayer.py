@@ -1,8 +1,10 @@
 from tkinter import *
 import pygame
+from pygame.locals import*
 import os
 
 class mp:
+
 
     def __init__(self):
 
@@ -20,6 +22,8 @@ class mp:
 
         btnFrame = Frame(self.root, background="black", width=50, height=100)
         btnFrame.place(x=85,y=450)
+
+        #To use pause button to pause and play use counter
 
         playbtn = Button(btnFrame, text="Play", font=("Arial", 12, "bold"), background="maroon",  command=self.play).grid(row=0, column=1, padx=5)
 
@@ -41,8 +45,10 @@ class mp:
         scrollBar.pack(side=RIGHT,fill=Y)
         scrollBar.config(command=self.songList.yview)
         self.songList.place(x=0, y=0, width=380, height=400)
+
+        counter = 0
         
-        os.chdir("/Users/gmanj/Documents/songs2")
+        os.chdir(r"C:\Users\gmanj\OneDrive - University of Manitoba\Projects\musicPlayer\songs")
         # fetching songs
         songtracks = os.listdir()
         # inserting songs into playlist
@@ -54,9 +60,16 @@ class mp:
     def play(self):
         self.track.set(self.songList.get(ACTIVE))
         pygame.mixer.music.load(self.songList.get(ACTIVE))
-        pygame.mixer.music.play(20)
+        pygame.mixer.music.play(1)
     
     def pause(self):
+        """
+        global counter
+        counter = counter + 1
+        pygame.mixer.music.pause()
+        if (counter%2 != 0) :
+            pygame.mixer.music.play(1)
+        """
         pygame.mixer.music.pause()
 
     def stop(self):
@@ -67,6 +80,5 @@ class mp:
 
     def prev(self):
         pygame.mixer.music.rewind()
-
 
 mp()
